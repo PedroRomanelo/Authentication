@@ -1,0 +1,1 @@
+dotnet ef dbcontext scaffold "Server=pedro-ybera;Database=AuthDB;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -o Models/AuthDB -c AuthContext --context-dir Data --force
