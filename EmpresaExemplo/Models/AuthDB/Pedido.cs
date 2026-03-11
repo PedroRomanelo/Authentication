@@ -15,6 +15,16 @@ public partial class Pedido
 
     public DateTime Horario { get; set; }
 
+    public string Platform { get; set; } = null!;
+
+    public string OrderNumber { get; set; } = null!;
+
+    public string UsedCoupon { get; set; } = null!;
+
+    public decimal DiscountPercent { get; set; }
+
+    public int PaymentMethod { get; set; }
+
     public virtual User Cliente { get; set; } = null!;
 
     public virtual ICollection<ItensPedido> ItensPedidos { get; set; } = new List<ItensPedido>();

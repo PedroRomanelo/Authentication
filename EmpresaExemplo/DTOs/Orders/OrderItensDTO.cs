@@ -2,11 +2,11 @@
 
 namespace EmpresaExemplo.DTOs.Orders;
 
-public class OrderItensDTO
-{
+public record OrderItensDTO
+(
     [Required(ErrorMessage = "Campo de Id do produto é obrigatório")]
-    public int ProductId { get; set; }
+    int ProductId,
 
     [Required(ErrorMessage = "Campo de quantidade do produto é obrigatório")]
-    public int Quantity {  get; set; }
-}
+    int Quantity
+);

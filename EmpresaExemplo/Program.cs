@@ -38,6 +38,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<AuthService>();
 
 var app = builder.Build();
 

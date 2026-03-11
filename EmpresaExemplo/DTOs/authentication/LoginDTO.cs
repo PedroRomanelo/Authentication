@@ -3,12 +3,11 @@
 
 namespace EmpresaExemplo.DTOs.authentication;
 
-public class LoginDTO
-{
+public record LoginDTO(
     [Required(ErrorMessage = "O campo endereço de E-mail é obrigatório. Preencha-o")]
     [EmailAddress(ErrorMessage = "O formato do campo de e-mail está inválido. Tente novamente.")]
-    public string Email { get; set; }
+    string Email,
 
     [Required(ErrorMessage = " O campo senha é obrigatório.")]
-    public string Password { get; set; }
-}
+    string Password
+);

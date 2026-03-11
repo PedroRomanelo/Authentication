@@ -1,14 +1,15 @@
-﻿using EmpresaExemplo.Services;
+﻿using EmpresaExemplo.DTOs.Orders;
+using EmpresaExemplo.Enums;
+using EmpresaExemplo.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using EmpresaExemplo.DTOs.Orders;
 
 
 namespace EmpresaExemplo.Controllers;
 
 [Authorize]
-[Route("itensorder")]
+[Route("[Controller]")]
 [ApiController]
 public class ItensOrderController : ControllerBase
 {
@@ -20,22 +21,25 @@ public class ItensOrderController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddItens([FromBody] List<OrderItensDTO> request)
+    public async Task<IActionResult> AddItens([FromBody] OrderDTO request)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
 
         var clientIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var stateClaim = User.FindFirstValue("state");
+
         if(string.IsNullOrEmpty(clientIdClaim) || !int.TryParse(clientIdClaim, out int clienteId))
         {
             return Unauthorized("Id não encontrado no jwt");
         }
 
+        if (string.IsNullOrEmpty(stateClaim) || !Enum.TryParse<States>(stateClaim, out var estadoCliente))
+        {
+            return Unauthorized("Estado não encontrado ou inválido no jwt");
+        }
+
         try
         {
-            var resultado = await _orderService.CreateOrderItens(clienteId, request);
+            var resultado = await _orderService.CreateOrderItens(clienteId, estadoCliente, request);
 
             return Ok(resultado);
         }
@@ -49,7 +53,7 @@ public class ItensOrderController : ControllerBase
         }
     }
 
-    [HttpGet("orders")]
+    [HttpGet]
     public async Task<IActionResult> GetMeusPedidos()
     {
         var clientIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);

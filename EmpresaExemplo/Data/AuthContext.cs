@@ -71,8 +71,19 @@ public partial class AuthContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__Pedidos__3214EC07F3C7EB4B");
 
+            entity.Property(e => e.DiscountPercent).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Frete).HasColumnType("decimal(10, 2)");
             entity.Property(e => e.Horario).HasColumnType("datetime");
+            entity.Property(e => e.OrderNumber)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasDefaultValue("");
+            entity.Property(e => e.Platform)
+                .HasMaxLength(20)
+                .HasDefaultValue("");
+            entity.Property(e => e.UsedCoupon)
+                .HasMaxLength(50)
+                .HasDefaultValue("");
             entity.Property(e => e.ValorTotal).HasColumnType("decimal(10, 2)");
 
             entity.HasOne(d => d.Cliente).WithMany(p => p.Pedidos)
